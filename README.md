@@ -1,4 +1,22 @@
-# vue-music
+# vue-music 
+数据均来源于酷狗音乐
+
+# 主要实现技术：
+ - vuejs2.6
+ - vue-router
+ - less
+ - vuex
+ - axios
+ - cube-ui
+ - vue-lazyload 图片懒加载
+ - es6 
+ - webpack 
+ 
+ # 项目截图：
+ 
+ 
+ ## 说明
+ 第一个vue完整练手项目，如有不足，多多包涵
 
 ## Project setup
 ```
