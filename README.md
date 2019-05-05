@@ -14,7 +14,24 @@
  
  # 项目截图：
  
- 
+ ### 播放页面
+![播放页面](https://github.com/fop-xuan/img-folder/blob/master/10.PNG)
+![播放页面](https://github.com/fop-xuan/img-folder/blob/master/11.PNG)
+ ### 首页
+ ![](https://github.com/fop-xuan/img-folder/blob/master/1.png)
+ ### 排行榜
+![排行榜](https://github.com/fop-xuan/img-folder/blob/master/2.png)
+![榜单](https://github.com/fop-xuan/img-folder/blob/master/3.png)
+ ### 歌单页面
+![歌单](https://github.com/fop-xuan/img-folder/blob/master/4.png)
+![歌单](https://github.com/fop-xuan/img-folder/blob/master/8.PNG)
+ ### 歌手
+![歌手](https://github.com/fop-xuan/img-folder/blob/master/fdfd.png)
+![歌手歌单](https://github.com/fop-xuan/img-folder/blob/master/9.PNG)
+ ### 搜索
+![搜索](https://github.com/fop-xuan/img-folder/blob/master/sdss.png)
+![搜索内容](https://github.com/fop-xuan/img-folder/blob/master/dsds.png)
+
  ## 说明
  第一个vue完整练手项目，如有不足，多多包涵
 
