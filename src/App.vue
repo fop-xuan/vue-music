@@ -1,29 +1,48 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <z-header></z-header>
+    <div class="count" :class="{'active': isward}">
+      <transition name='showCom'>
+        <router-view />
+      </transition>
     </div>
-    <router-view/>
+    <z-player></z-player>
   </div>
 </template>
-
-<style lang="less">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+<script>
+import zHeader from 'components/z-header/z-header'
+import zPlayer from 'components/z-player/z-player'
+import { mapState } from 'vuex'
+export default {
+  computed: {
+    ...mapState(['isward'])
+  },
+  components: {
+    zHeader,
+    zPlayer
   }
 }
+</script>
+
+<style lang="less" scoped>
+@import '/~common/style/style.less';
+  .showCom-enter,.showCom-leaver-to{
+    opacity: 0;
+  }
+  .showCom-enter-active,.showCom-leaver-active{
+    transition: .8s;
+  }
+  .count{
+    position: absolute;
+    top: 110px;
+    left: 0;
+    width: 100%;
+    bottom: 0px;
+    right: 0;
+    overflow: hidden;
+    background: @background-custom1;
+    &.active{
+      bottom: 60px;
+    }
+  }
 </style>
