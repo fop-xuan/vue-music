@@ -1,12 +1,10 @@
 import axios from 'axios'
-const CancelToken = axios.CancelToken
-let cancel = null
-const musicApi = `${process.env.VUE_APP_BASE_API2}/yy/index.php?r=play/getdata`
+import jsonp from 'jsonp'
 
 export function getDate(url, init) {
     return axios({
         url: url,
-        baseURL: process.env.VUE_APP_BASE_API1,
+        baseURL: '/api',
         params: {
             json: true,
             ...init
@@ -20,7 +18,7 @@ export function getDate(url, init) {
 export function getSearchdate(url, init) {
     return axios({
         url: url,
-        baseURL: process.env.VUE_APP_BASE_API3,
+        baseURL: '/search',
         params: {
             format: 'json',
             ...init
@@ -32,19 +30,22 @@ export function getSearchdate(url, init) {
     })
 }
 
+function getParms(init) {
+    let str = ''
+    for (let attr in init) {
+        str += attr + '=' + init[attr]
+    }
+    return str
+}
 export function getMusic(init) {
-    cancel && cancel()
-    return axios.get(musicApi, {
-        params: {
-            json: true,
-            ...init
-        },
-        cancelToken: new CancelToken(function executor(c) {
-            cancel = c
+    const url = `https://wwwapi.kugou.com/yy/index.php?r=play/getdata&${getParms(init)}`
+    return new Promise((resolve, reject) => {
+        jsonp(url, null, (err, data) => {
+            if (!err) {
+                resolve(data)
+            } else {
+                reject(err)
+            }
         })
-    }).then((data) => {
-        return data.data
-    }).catch((error) => {
-        console.log(error)
     })
 }

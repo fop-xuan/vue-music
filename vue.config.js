@@ -39,14 +39,6 @@ module.exports = {
           '^/api': ''
         }
       },
-      '/music': {
-        target: 'http://www.kugou.com',
-        changeOrigin: true,
-        ws: true,
-        pathRewrite: {
-          '^/music': ''
-        }
-      },
       '/search': {
         target: 'http://mobilecdn.kugou.com/api/v3/search',
         changeOrigin: true,
@@ -55,6 +47,6 @@ module.exports = {
           '^/search': ''
         }
       }
-    },
+    }
   }
 }

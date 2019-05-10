@@ -31,18 +31,15 @@ export default {
         })
     },
     methods: {
-        computedClass(list) { // 按数据按照名字开头类别
-            const newList = []
-            let n = 0
-            for (let i = 0; i < list.length; i++) {
-                if (i !== list.length - 1 && list[i].classname.charAt(0) !== list[i + 1].classname.charAt(0)) {
-                    newList.push(list.slice(n, i + 1))
-                    n = i + 1
-                } else if (i === list.length - 1) {
-                    newList.push(list.slice(n, i + 1))
+        computedClass(list) { // 数据按照名字开头类别
+            const obj = {}
+            list.forEach(item => {
+                if (!obj[item.classname.charAt(0)]) {
+                    obj[item.classname.charAt(0)] = []
                 }
-            }
-            this.songerClass = newList
+                obj[item.classname.charAt(0)].push(item)
+            })
+            this.songerClass = Object.values(obj)
         },
         getSheetList() { // 得到歌手列表数据
             getDate(`/singer/list/${this.$route.params.id}`).then((data) => {
