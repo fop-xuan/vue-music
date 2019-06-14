@@ -21,6 +21,7 @@ import zMusicList from 'components/z-musicList/z-musicList'
 import float from 'components/float/float'
 import scrollMixins from 'common/mixins/scrollMixins'
 import visibilityMixins from 'common/mixins/visibilityMixins'
+import { mapMutations } from 'vuex'
 const EVENT_SHOW = 'show'
 export default {
     name: 'zSongSheet',
@@ -38,8 +39,14 @@ export default {
             this.computedH() // 调用refresh方法 要不然初次加载不能滚动
         })
     },
+    methods: {
+        ...mapMutations(['changeListDateLen'])
+    },
     computed: {
         listDate() {
+            this.changeListDateLen({
+                listDateLen: this.sheet.songList.length
+            })
             return this.sheet.songList
         }
     },

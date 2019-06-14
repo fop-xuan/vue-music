@@ -9,7 +9,8 @@ export default new Vuex.Store({
     isPlay: false,
     showPlayPage: false,
     listIndex: -1,
-    isward: false
+    isward: false,
+    listDateLen: 0
   },
   mutations: {
     ___getMusic(state, payload) { // 获取播放的歌曲
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     },
     changeIndex(state, payload) { // 改变播放中歌曲
       state.listIndex = payload.listIndex
+    },
+    changeListDateLen(state, payload) {
+      state.listDateLen = payload.listDateLen
     }
   },
   actions: {

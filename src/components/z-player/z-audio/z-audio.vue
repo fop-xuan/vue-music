@@ -2,7 +2,7 @@
     <audio ref='myAudio'
     :src="play_url"
     autoplay=“autoplay”
-    loop=“loop”
+    @ended="end"
     @timeupdate='timeupdate'
     @canplay='getDuration'
     ></audio>
@@ -12,15 +12,25 @@
 import { mapState } from 'vuex'
 const EVENT_CANPLAY = 'timeupdateHandle'
 const EVENT_UPDATE = 'getDurationHandle'
+const EVENT_END = 'end'
 export default {
     props: {
         play_url: {
             type: String,
             default: ''
+        },
+        playMode: {
+            type: String,
+            default: ''
+        }
+    },
+    data() {
+        return {
+            next: null
         }
     },
     computed: {
-        ...mapState(['isPlay', 'listIndex'])
+        ...mapState(['isPlay', 'listIndex', 'listDateLen'])
     },
     mounted() {
         this.on = null
@@ -46,9 +56,28 @@ export default {
     methods: {
         timeupdate(event) {
             this.$emit(EVENT_CANPLAY, event)
+            if (this.playMode === '' || this.playMode === '单曲循环') {
+                event.target.setAttribute('loop', 'loop')
+            } else {
+                event.target.removeAttribute('loop')
+            }
         },
         getDuration(event) {
             this.$emit(EVENT_UPDATE, event)
+        },
+        end() {
+            let next = null
+            if (this.playMode === '顺序播放') {
+                next = this.listIndex + 1
+            } else if (this.playMode === '随机播放') {
+                next = Math.round(Math.random() * this.listDateLen)
+                if (next === this.listIndex) {
+                    next = this.listIndex + 1
+                }
+            }
+            if (next) {
+                this.$emit(EVENT_END, next)
+            }
         }
     }
 }

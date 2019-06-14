@@ -38,6 +38,11 @@ export default {
     computed: {
        ...mapState(['listIndex'])
     },
+    created() {
+        this.changeListDateLen({
+            listDateLen: this.listDate.length
+        })
+    },
     watch: {
         listIndex(newVal) { // 通过listIndex的变换发送歌曲请求
             if (newVal === -1) {
@@ -59,7 +64,7 @@ export default {
     },
     methods: {
          ...mapActions(['_getMusic']),
-         ...mapMutations(['togglePlayPage', 'changeIndex', 'updateWard']),
+         ...mapMutations(['togglePlayPage', 'changeIndex', 'updateWard', 'changeListDateLen']),
         openPlay(index) { // 当前的listIndex 等于当前列表歌曲 并且显示出歌曲页面
             this.musicIndex = index
             this.changeIndex({ listIndex: index })

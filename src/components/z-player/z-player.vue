@@ -3,7 +3,9 @@
         <z-audio v-if='musicInfo'
         @timeupdateHandle='updateTime'
         @getDurationHandle='durationHandle'
+        @end='end'
         :play_url='musicInfo.play_url'
+        :playMode='playMode'
         ref='zAudio'></z-audio>
         <div class="player-tool" @touchend.stop='showPlayerPage'  v-if='musicInfo'>
             <div class="song-img" :class="{'active':isPlay}">
@@ -65,6 +67,7 @@
                             <span class="currentTime">{{currentTime}}</span>
                         </div>
                         <div class="audio-button">
+                            <cube-button @click="showPicker" class="switch-playMode">{{playModeText}}</cube-button>
                             <span class="icon icon-backward2" @touchend.stop='prev'></span>
                             <span class="icon icon-play3" @touchend.stop='toggle' :class="{'icon-play3':!isPlay,'icon-pause2':isPlay}"></span>
                             <span class="icon icon-forward3" @touchend.stop='next'></span>
@@ -91,11 +94,17 @@ export default {
             currentTime: 0,
             pauseAutoScroll: false,
             activeIndex: -1,
-            activeLyric: ''
+            activeLyric: '',
+            playModeList: [
+                { text: '单曲循环', value: '单曲循环' },
+                { text: '顺序播放', value: '顺序播放' },
+                { text: '随机播放', value: '随机播放' }
+            ],
+            playMode: ''
         }
     },
     computed: {
-        ...mapState(['musicInfo', 'isPlay', 'showPlayPage', 'listIndex']),
+        ...mapState(['musicInfo', 'isPlay', 'showPlayPage', 'listIndex', 'listDateLen']),
         getLyric() { // 得到数组形式歌词数据
             let arr = []
             if (this.musicInfo.lyrics) {
@@ -106,6 +115,13 @@ export default {
                 })
             }
             return arr
+        },
+        playModeText() {
+            if (this.playMode === '') {
+                return '单曲循环'
+            } else {
+                return this.playMode
+            }
         }
     },
     mounted() {
@@ -172,6 +188,22 @@ export default {
         },
         prev() {
             this.changeIndex({ listIndex: this.listIndex - 1 })
+        },
+        showPicker() { // 点击出现模式选框
+            if (!this.picker) {
+                this.picker = this.$createPicker({
+                    title: 'Picker',
+                    data: [this.playModeList],
+                    onSelect: this.selectHandle
+                })
+            }
+            this.picker.show()
+        },
+        selectHandle(selectedVal, selectedIndex) {
+            this.playMode = selectedVal[0]
+        },
+        end(next) { // 切换播放形式
+            this.changeIndex({ listIndex: next })
         }
     },
     directives: {
@@ -214,6 +246,15 @@ export default {
 </script>
 <style lang='less'>
 @import '/~common/style/style.less';
+    .switch-playMode{
+        width: auto;
+        font-size: 12px;
+        position: absolute;
+        left: 10px;
+        top: 62px;
+        padding: 10px;
+        border-radius: 5px;
+    }
     audio{
         display: none;
     }
